@@ -1,0 +1,11 @@
+//サインインモーダル機能表示元
+#signUp.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title 新規登録
+        %button.close{"aria-label" => "閉じる", "data-dismiss" => "modal", :type => "button", id: "close"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        .form
+        = render 'devise/registrations/new'

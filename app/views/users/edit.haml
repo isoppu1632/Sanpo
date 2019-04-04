@@ -1,0 +1,58 @@
+= render '/layouts/header'
+
+.w-50.mx-auto
+  %h4.mb-3 情報入力
+  = form_for(current_user) do |f|
+    .row
+      .col-md-2.md-3
+        = f.label :image do
+          = fa_icon 'image'
+          = f.file_field :image, class: 'invisible'
+
+      .col-md-5.mb-3
+        = f.label "姓"
+        = f.text_field :last_name , class: "form-control" , id: "lastName",:required => ""
+        .invalid-feedback
+          名前を入力してください
+      .col-md-5.mb-3
+        = f.label "名"
+        = f.text_field :first_name , class: "form-control" , id: "firstName",:required => ""
+        .invalid-feedback
+          名前を入力してください
+    .mb-3
+      = f.label "メールアドレス"
+      = f.email_field :email , class: "form-control" , id: "email", :required => ""
+      .invalid-feedback
+        配送の更新に有効なメールアドレスを入力してください
+    .mb-3
+      = f.label "自己紹介"
+      = f.text_area :appeal , class: "form-control" , id: "text"
+    .row
+      .col-md-3.mb-3
+        = f.label "郵便番号"
+        = f.text_field :postcode , class: "form-control" , id: "zip", :required => ""
+        .invalid-feedback
+          郵便番号を入力してください
+      .col-md-2.mb-3
+        = f.label "都道府県"
+        .control
+          = f.collection_select :prefecture_id, JpPrefecture::Prefecture.all, :code, :name
+        .invalid-feedback
+          都道府県を選択してください
+      .col-md-7.mb-3
+        = f.label "市町村"
+        = f.text_field :city , class: "form-control" , id: "city", :required => ""
+        .invalid-feedback
+          市町村を選択してください
+    .mb-3
+      = f.label "住所"
+      = f.text_field :block , class: "form-control" , id: "address", :required => ""
+      .invalid-feedback
+        配送先住所を入力してください
+    .mb-3
+      = f.label "アパート・マンション名(任意)"
+      = f.text_field :building , class: "form-control" , id: "address2"
+    .mb-3
+      = f.label "電話番号"
+      = f.telephone_field :tel , class: "form-control" , id: "tel", :required => ""
+    = f.submit "登録", class: "btn btn-primary btn-lg btn-block"

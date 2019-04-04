@@ -1,0 +1,40 @@
+= render '/layouts/header'
+
+.w-50.mx-auto
+  %h4.mb-3 ペット情報入力
+  = form_for @pet do |f|
+    .row
+      .col-md-4.md-3
+        = f.label :pet_image do
+          = fa_icon 'image'
+          = f.file_field :pet_image, class: 'invisible'
+      .col-md-6.mb-3
+        = f.label "名前"
+        = f.text_field :name , class: "form-control" , id: "lastName",:required => ""
+        .invalid-feedback
+          名前を入力してください
+    .row
+      .col-md-4.md-3
+        = f.label "年齢"
+        = f.number_field :age , class: "form-control" , :required => ""
+
+      .col-md-6.mb-3
+        = f.label "犬種"
+        = f.text_field :dog_type , class: "form-control" ,:required => ""
+    .row
+      .col-md-1.mb-3
+      .col-md-5.mb-3
+        %p 混合ワクチン
+        %label
+        = f.radio_button :mixed_vaccine ,"未接種" ,checked: "checked"
+        未接種
+        %label
+        = f.radio_button :mixed_vaccine ,"接種済み"
+        接種済み
+      .col-md-6.mb-3
+        %p 狂犬病ワクチン
+        %label
+          %input#exampleRadios1{:name => "exampleRadios", :type => "radio", :required => ""}/
+        狂犬病ワクチン接種済み
+        %p.small ※未接種の方は接種後にお願いいたします。
+    = f.submit "登録", class: "btn btn-primary btn-lg btn-block"

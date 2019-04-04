@@ -1,0 +1,80 @@
+= render '/layouts/header'
+
+.w-75.mx-auto
+  .row
+    .col-md-4.order-md-1
+      .card
+        .card-header.h5 飼い主情報
+        .card-body
+          .row.border-bottom
+            .row.featurette
+              .col-5
+                -if @user.image.url.present?
+                  = image_tag @user.image.url, class: " card-img-top rounded-circle thumbnail"
+                -else
+                  = image_tag "https://image.space.rakuten.co.jp/d/strg/ctrl/9/382ec71bd4082592411a892cbf96bc4540950076.85.2.9.2.png" ,class: " card-img-top"
+                - unless user_signed_in? && current_user.id == @user.id
+                  - if user_signed_in?
+                    #follow_form.text-center
+                      - if current_user.request?(@user)
+                        #liked.btn.btn-default 招待済
+                      - else
+                        = render 'follow', {request: @request}
+              .col-7
+                .card-title#user-description
+                  = @user.last_name
+                  = @user.first_name
+                -if user_signed_in? && current_user.id == @user.id
+                  = link_to "編集する" ,edit_user_path
+          .card-title
+            %h5 住所
+          .card-text
+            %label
+              〒
+              = @user.postcode
+            = @user.prefecture_name
+            = @user.city
+            = @user.block
+            = @user.building
+          .card-title
+            %h5 電話番号
+          .card-text
+            = @user.tel
+
+    .col-md-8.order-md-2
+      .card
+        %label.card-header
+          愛犬情報
+          - if user_signed_in? && current_user.id == @user.id
+            = link_to "ペットを追加" , new_pet_path
+        .card-title
+        .card-body
+          - @pets.each do |pet|
+            .row.featurette
+              .col-md-3.order-md-1
+                -if pet.pet_image.url.present?
+                  = image_tag pet.pet_image.url , class: "card-img-top rounded pet_image"
+              .col-md-9.order-md-2
+                Name:
+                = pet.name
+                .card-text
+                  Age:
+                  = pet.age
+                  才
+                .card-text
+                  Type:
+                  = pet.dog_type
+                - if user_signed_in? && current_user.id == @user.id
+                  = link_to "編集する", edit_pet_path(pet.id), class: "float-right"
+        - if user_signed_in? && current_user.id == @user.id
+          #accordion2.accordion{:role => "tablist"}
+          .card
+            %a#heading1.card-header.stretched-link{:role => "tab"}
+              %h6.mb-0
+                .text-body.text-decoration-none{"aria-controls" => "collapse1", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapse1"} Sanpo 仲間達
+            #collapse1.collapse{"aria-labelledby" => "heading1", "data-parent" => "#accordion2", :role => "tabpanel"}
+              .card-body
+                - @users.each do |user|
+                  .panel-title= link_to "#{user.first_name} #{user.last_name}",  user_path(user)
+
+

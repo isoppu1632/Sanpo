@@ -1,0 +1,28 @@
+= render '/layouts/header'
+
+.w-75.mx-auto
+  .row
+    - @users.each do |user|
+      .col-sm-6.col-md-4
+        .card-deck
+          .card
+            #carouselExampleSlidesOnly.carousel.slide{"data-ride" => "carousel"}
+              .carousel-inner
+                - user.pets.each_with_index do |pet , i|
+                  - if i == 0
+                    .carousel-item.active
+                      = image_tag pet.pet_image.url , class: "card-img-top index_image"
+                      .h5
+                        = pet.name
+                  - else
+                    .carousel-item
+                      = image_tag pet.pet_image.url , class: ".card-img-top index_image"
+                      .h5
+                        = pet.name
+            .card-body
+              .card-text
+                = truncate( user.appeal, length:100)
+              .card-title.h6
+                %label.float-right
+                  飼い主：
+                  =link_to "#{user.last_name} #{user.first_name}", user_path(user)

@@ -62,6 +62,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'haml-rails'
+gem 'erb2haml'
 
 gem "font-awesome-rails"
 
@@ -69,6 +70,10 @@ gem 'devise'
 
 gem 'pry-rails'
 
-gem 'bootstrap-sass'
+gem 'bootstrap', '~> 4.1.1'
+
+gem 'jquery-rails'
 
 gem 'jp_prefecture', '~> 0.9.0'
+
+gem 'carrierwave'
